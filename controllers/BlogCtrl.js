@@ -35,7 +35,36 @@ const BlogCtrl = {
       });
       newBlogs.save();
 
-      res.json(newBlogs._id);
+      res.json({_id: newBlogs._id});
+    } catch (err) {
+      res.status(500).json({ messsage: err.message });
+    }
+  },
+  updateSingle: async (req, res) => {
+    try {
+      const { id } = req.params;
+
+      if (!id || id.length !== 24)
+        return res
+          .status(400)
+          .json({ message: "Please provide correct id in the URL" });
+      await Blogs.findByIdAndUpdate(id, {$set: req.body});
+
+      res.json({message: "Updated successfully."});
+    } catch (err) {
+      res.status(500).json({ messsage: err.message });
+    }
+  },
+  deleteSingle: async (req, res) => {
+    try {
+      const { id } = req.params;
+      if (!id || id.length !== 24)
+        return res
+          .status(400)
+          .json({ message: "Please provide correct id in the URL" });
+      await Blogs.findByIdAndDelete(id);
+
+      res.json("Deleted the post Successfully");
     } catch (err) {
       res.status(500).json({ messsage: err.message });
     }

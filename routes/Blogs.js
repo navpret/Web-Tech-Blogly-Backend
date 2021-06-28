@@ -5,6 +5,8 @@ router.route("/")
   .get(BlogCtrl.getAll)
   .post(BlogCtrl.create);
 
-router.route("/:id").get(BlogCtrl.getSingle);
+router.route("/:id").get(BlogCtrl.getSingle)
+  .patch(BlogCtrl.updateSingle)
+  .delete(BlogCtrl.deleteSingle);
 
 module.exports = router;
